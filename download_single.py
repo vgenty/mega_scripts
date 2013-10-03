@@ -1,20 +1,13 @@
+import dl_methods as m
+import sys
 import credentials as c
-import os,sys
-from mega import Mega
 
-def download_single():
-#Account info
+def main():
     details=c.logmein()
     email = details[0]
     password = details[1]
-    
-#Make new mega
-    mega = Mega({'verbose': True})
-    m = mega.login(email, password)
-    url=sys.argv[1]
-    print 'Downloading... '
-    print url
-    m.download_url(url)
-    
 
-download_single()
+    m.download_single(email,password,sys.argv[1])
+
+if __name__ == '__main__' :
+    main()

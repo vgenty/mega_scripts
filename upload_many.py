@@ -1,6 +1,7 @@
 import os,sys
 from mega import Mega
 import credentials as c
+
 def upload(files,rars):
     print '\nUploading to MEGA'
     links=[]
@@ -85,7 +86,7 @@ def rename(files) :
     
     return realfiles2 
     
-if __name__ == '__main__':
+def main():
     print 'Logging in'
     details=c.logmein()
     email = details[0]
@@ -110,3 +111,6 @@ if __name__ == '__main__':
     
     write_to_file(realfiles,rars,links)
     print 'Done'
+
+if __name__ == '__main__':
+    main()
