@@ -1,4 +1,4 @@
-from mega import Mega
+from mega.mega import Mega
 
 def download_single(email,password,url):
     #Make new mega
