@@ -2,14 +2,14 @@ import os,sys
 from mega.mega import Mega
 import credentials as c
 
-def upload(files,rars,m):
+def upload(files,m):
     print '\nUploading to MEGA'
     links=[]
     
-    for k in xrange(len(rars)) :
+    for k in xrange(len(files)) :
         print '\n'
-        print 'Uploading: ' + files[k] + ' in ' + rars[k]
-        uploaded = m.upload(rars[k])
+        print 'Uploading: ' + files[k]
+        uploaded = m.upload(files[k])
         print 'Uploaded, public link: '
         links.append(m.get_upload_link(uploaded))
         print links[k] 
@@ -24,18 +24,18 @@ def rarme(files,seed):
     
     for file_n in files :
         if not file_n.startswith('.') and not file_n.endswith('.rar'):
-            os.system('rar a -r -hp%s %s.rar %s' %(passw,seed+str(count),file_n))
+            os.system('rar a -v1024M -r -hp%s %s.rar %s' %(passw,seed+str(count),file_n))
         rars.append(seed+str(count) + '.rar')
         count += 1
 
     return rars
     
-def write_to_file(files,rars,links) :    
+def write_to_file(files,links) :    
     fLinks = open('links.dat', 'w')
     fAll   = open('all.dat', 'w')
     
     for i in xrange(len(files)):
-        fAll.write(files[i] + ' ' + rars[i] + ' ' + links[i] + '\n')
+        fAll.write(files[i] + links[i] + '\n')
         fLinks.write(links[i] + '\n')
 
     fLinks.close()
@@ -95,21 +95,21 @@ def main():
     mega = Mega({'verbose': True})
     m = mega.login(email, password)    
     
-    os.chdir("./multiple_upload")
+    os.chdir("./big_upload")
     files = [x for x in os.listdir('.')]
     print 'Found: '
     files.sort()
     print files
     
-    realfiles = rename(files)
-    print realfiles
+#    realfiles = rename(files)
+#    print realfiles
     seed = sys.argv[1]
 
-    rars = rarme(realfiles,seed)
+#    rars = rarme(realfiles,seed)
 
-    links = upload(realfiles,rars,m)
+    links = upload(files,m)
     
-    write_to_file(realfiles,rars,links)
+    write_to_file(files,links)
     print 'Done'
 
 if __name__ == '__main__':

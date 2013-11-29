@@ -1,5 +1,5 @@
 import os,sys
-from mega import Mega
+from mega.mega import Mega
 import credentials as c
 
 def upload_single(filename):

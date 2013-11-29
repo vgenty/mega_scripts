@@ -1,4 +1,4 @@
-from mega import Mega
+from mega.mega import Mega
 from multiprocessing import Process
 import dl_methods as m
 import credentials as c
